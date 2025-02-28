@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Box, Typography, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const VerificationCode = () => {
   const [code, setCode] = useState(Array(6).fill(""));
@@ -37,10 +38,8 @@ const VerificationCode = () => {
     if (event.key === "Backspace") {
       const newCode = [...code];
       if (code[index] !== "") {
-        // Clear the current input
         newCode[index] = "";
       } else if (index > 0) {
-        // Move focus to the previous input and clear it
         document.getElementById(`digit-${index - 1}`).focus();
         newCode[index - 1] = "";
       }
@@ -59,7 +58,7 @@ const VerificationCode = () => {
       return;
     }
     try {
-      const response = await axios.post("/api/verify", { code: code.join("") });
+      const response = await axios.post("http://localhost:5000/api/verify", { code: code.join("") });
       if (response.status === 200) {
         navigate("/success");
       }

@@ -6,6 +6,7 @@ import axios from "axios";
 const VerificationCode = () => {
   const [code, setCode] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
+  const [loading,setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState(Array(6).fill(false));
   const navigate = useNavigate();
 
@@ -57,13 +58,16 @@ const VerificationCode = () => {
     if (handleValidationErrors()) {
       return;
     }
+    setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/verify", { code: code.join("") });
+      const response = await axios.post("https://blys-api.krishna-acharya.com.np/api/verify", { code: code.join("") });
       if (response.status === 200) {
         navigate("/success");
       }
     } catch (err) {
       setError("Verification Error");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -98,8 +102,8 @@ const VerificationCode = () => {
         ))}
       </Box>
       {error && <Alert severity="error">{error}</Alert>}
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Submit
+      <Button disabled={loading} variant="contained" color="primary" onClick={handleSubmit}>
+        {loading ? "Verifying..." : "Submit"}
       </Button>
       <Alert severity="info">Only pasting 6 digit code will automatically populate the input fields</Alert>
     </Box>

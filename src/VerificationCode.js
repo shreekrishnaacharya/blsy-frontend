@@ -6,6 +6,7 @@ import axios from "axios";
 const VerificationCode = () => {
   const [code, setCode] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
+  const [hasInteracted, setHasInteracted] = useState(Array(6).fill(false));
   const [loading,setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState(Array(6).fill(false));
   const navigate = useNavigate();
@@ -15,6 +16,11 @@ const VerificationCode = () => {
   }, [code]);
 
   const handleChange = (value, index) => {
+    setHasInteracted(pre=>{
+      const newHasInteracted = [...pre];
+      newHasInteracted[index] = true;
+      return newHasInteracted;
+    });
     const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
@@ -24,6 +30,9 @@ const VerificationCode = () => {
   };
 
   const handlePaste = (event) => {
+    setHasInteracted(pre=>{
+      return pre.map(() => true);
+    });
     const pasteData = event.clipboardData.getData("Text").slice(0, 6);
     if (/^\d{1,6}$/.test(pasteData)) {
       const newCode = Array(6).fill("");
@@ -36,6 +45,11 @@ const VerificationCode = () => {
   };
 
   const handleKeyDown = (event, index) => {
+    setHasInteracted(pre=>{
+      const newHasInteracted = [...pre];
+      newHasInteracted[index] = true;
+      return newHasInteracted;
+    });
     if (event.key === "Backspace") {
       const newCode = [...code];
       if (code[index] !== "") {
@@ -45,11 +59,6 @@ const VerificationCode = () => {
         newCode[index - 1] = "";
       }
       setCode(newCode);
-      setValidationErrors((prev) => {
-        const newErrors = [...prev];
-        newErrors[index] = false;
-        return newErrors;
-      });
     }
   };
   
@@ -72,7 +81,7 @@ const VerificationCode = () => {
   };
 
   const handleValidationErrors = () => {
-    const errors = code.map((digit) => digit === "" || !/^\d?$/.test(digit));
+    const errors = code.map((digit,index) => (hasInteracted[index] && (digit === "" || !/^\d?$/.test(digit))));
     setValidationErrors(errors);
     return errors.some((error) => error);
   };

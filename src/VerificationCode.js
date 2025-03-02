@@ -12,6 +12,7 @@ const VerificationCode = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setError("");
     handleValidationErrors();
   }, [code]);
 

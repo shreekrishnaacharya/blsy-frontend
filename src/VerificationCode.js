@@ -71,7 +71,6 @@ const VerificationCode = () => {
     setLoading(true);
     try {
       const response = await axios.post("https://blys-api.krishna-acharya.com.np/api/verify", { code: code.join("") });
-      console.log(response,'response');
       if (response.status === 200) {
         navigate("/success");
       }

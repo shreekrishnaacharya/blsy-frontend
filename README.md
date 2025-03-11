@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# OTP Verification Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple React-based project for OTP (One Time Password) verification with the following features:
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Manual Entry and Pasting**: Users can manually enter each digit of the OTP or paste the entire code from the clipboard.
+- **Auto-Focus**: Each input field accepts only one digit. Entering a digit automatically moves the focus to the next input field if available.
+- **Submit and Verify**: Upon entering the OTP and clicking the submit button, the application sends a POST request to the server for verification.
+- **Error Handling**: If the server returns an error, a "Verification Error" message is displayed on the page.
+- **Successful Verification**: If the server response indicates a successful verification, the user is redirected to the `/success` route.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React**: For building the user interface.
+- **React Router**: For handling client-side routing.
+- **Axios**: For making HTTP requests to the server.
+- **Material-UI**: For styling the components.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Setup Instructions
 
-### `npm test`
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Start the development server by running `npm start`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## File Structure
 
-### `npm run build`
+- `src/VerificationCode.js`: Main component handling OTP verification logic.
+- `src/SuccessPage.js`: Component displayed on successful OTP verification.
+- `src/index.js`: Entry point for the React application.
+- `public/index.html`: HTML template for the application.
+- `src/App.js`: Contains routing logic for the application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Testing
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Tests for the OTP verification functionality are written using React Testing Library and can be found in `src/VerificationCode.test.js`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## License
 
-### `npm run eject`
+This project is licensed under the MIT License.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

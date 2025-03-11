@@ -3,8 +3,12 @@ import { render, fireEvent, waitFor } from "@testing-library/react";
 import VerificationCode from "./VerificationCode"; // Assuming the component is in the same directory
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import '@testing-library/jest-dom';
+import axios from "axios";
+
+jest.mock("axios");
 
 describe("VerificationCode Component", () => {
+
   const getRenderedComponent = () =>
     render(
       <MemoryRouter initialEntries={["/"]}>
@@ -52,21 +56,20 @@ describe("VerificationCode Component", () => {
     expect(document.activeElement).toBe(inputFields[0]);
   });
 
-  // it("navigates to success page on successful verification", async () => {
-  //   const { getByRole, getAllByRole, findByText } = getRenderedComponent();
-  //   const inputFields = getAllByRole("textbox");
-  //   const submitButton = getByRole("button", { name: /submit/i });
-  //   for (let i = 0; i < 6; i++) {
-  //     fireEvent.change(inputFields[i], { target: { value: "1" } });
-  //   }
-  //   fireEvent.click(submitButton);
+  it("navigates to success page on successful verification", async () => {
+    axios.post = jest.fn().mockResolvedValue({ status: 200 });
+    const { getByRole, getAllByRole, findByText } = getRenderedComponent();
+    const inputFields = getAllByRole("textbox");
+    const submitButton = getByRole("button", { name: /submit/i });
+    for (let i = 0; i < 6; i++) {
+      fireEvent.change(inputFields[i], { target: { value: "5" } });
+    }
+    fireEvent.click(submitButton);
 
-  //   // Mocking successful verification
-  //   await waitFor(() => {
-  //     const successMessage = findByText(/success/i);
-  //     expect(successMessage).toBeInTheDocument();
-  //   });
-  // });
+    // Mocking successful verification
+    const successMessage = await waitFor(() => findByText(/success/i));
+    expect(successMessage).toBeInTheDocument();
+  });
 
   it("displays validation errors for empty or non-numeric inputs", () => {
     const { getAllByRole } = getRenderedComponent();
